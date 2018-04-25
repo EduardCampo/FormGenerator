@@ -9,10 +9,11 @@ namespace FormApp
         public string Name { get; set; }
         public int Salary { get; set; }
         public bool IsAdmin { get; set; }
-        //public Sex Sex { get; set; }
+        public Gender Gender { get; set; }
+        public DateTime Start { get; set; }
     }
 
-    public enum Sex
+    public enum Gender
     {
         Male = 0,
         Female = 1

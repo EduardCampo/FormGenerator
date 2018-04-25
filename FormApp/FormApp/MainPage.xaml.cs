@@ -16,8 +16,11 @@ namespace FormApp
 			InitializeComponent();
 		    EmployeeModel = new Employee();
         }
-
-	    async void GenerateFormPage(object sender, EventArgs e)
+	    public void CheckEmployee(object sender, EventArgs e)
+	    {
+	        //nothing
+	    }
+        async void GenerateFormPage(object sender, EventArgs e)
 	    {
 	        var formGenerator = new FormGenerator();
 	        var formPage = formGenerator.GeneratePage<Employee>(EmployeeModel);
