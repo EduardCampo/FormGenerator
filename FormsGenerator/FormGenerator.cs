@@ -13,7 +13,9 @@ namespace FormsGenerator
         {
         }
         /// <summary>
-        /// Genereates a new form page based on the type of object provided
+        /// Genereates a new form page based on the type of object provided.
+        /// When clicking submit, all the info gets copied onto the instance of
+        /// the calling party.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="instance"></param>
@@ -31,7 +33,7 @@ namespace FormsGenerator
             {
                 var strategy = new ViewStrategy(property);
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(40, GridUnitType.Absolute) });
-                grid.Children.Add(GetLabel(property.Name), 0, currentRow);
+                grid.Children.Add(GetLabel(property.Name.SplitCamelCase()), 0, currentRow);
 
                 var type = property.PropertyType;
                 if (type.BaseType == typeof(Enum)) type = type.BaseType;
@@ -41,7 +43,6 @@ namespace FormsGenerator
             }
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(50, GridUnitType.Absolute) });
             
-            formPage.Content = grid;
             formPage.SetContent(grid);
             return formPage;
         }

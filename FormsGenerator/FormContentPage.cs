@@ -47,7 +47,9 @@ namespace FormsGenerator
                 {
                     if (view.GetType() != typeof(Label))
                     {
-                        properties[i].SetValue(Model, GetValue(properties[i], view));
+                        var value = GetValue(properties[i], view);
+                        if (value == null) return;
+                        properties[i].SetValue(Model, value);
                         i++;
                     }
                 }
@@ -65,20 +67,33 @@ namespace FormsGenerator
             {
                 case ("Entry"):
                     var Entry = view as Entry;
-                    if (prop.PropertyType == typeof(int)) return Int32.Parse(Entry.Text); ;
-                    return Entry.Text;
+
+                    if (!string.IsNullOrEmpty(Entry.Text))
+                    {
+                        if (prop.PropertyType == typeof(int)) return Int32.Parse(Entry.Text);
+                        return Entry.Text;
+                    }
+                    var name = prop.Name.SplitCamelCase();
+                    DisplayAlert(name + " Error", "Please fill the " + name + " field", "OK");
+                    break;
+
                 case ("Switch"):
                     var Switch = view as Switch;
                     return Switch.IsToggled;
+
                 case ("Picker"):
                     var Picker = view as Picker;
                     return Picker.SelectedIndex;
+
                 case ("DatePicker"):
                     var Date = view as DatePicker;
                     return Date.Date;
+
                 default:
                     return null;
             }
+
+            return null;
         }
     }
 }

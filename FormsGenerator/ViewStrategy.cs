@@ -24,7 +24,13 @@ namespace FormsGenerator
         }
         private View GetIntEntry()
         {
-            return new Entry();
+            var entry = new Entry();
+            var trigger = new EventTrigger();
+            trigger.Event = "TextChanged";
+            trigger.Actions.Add(new IntTriggerAction());
+            entry.Triggers.Add(trigger);
+            entry.Keyboard = Keyboard.Numeric;
+            return entry;
         }
         private View GetSwitch()
         {
@@ -36,8 +42,8 @@ namespace FormsGenerator
             if (Property.PropertyType.BaseType == typeof(Enum))
             {
                 var enumType = Property.PropertyType;
-                //var enumValues = System.Enum.GetValues(enumType);
                 picker.ItemsSource = System.Enum.GetValues(enumType);
+                picker.SelectedIndex = 0;
             }
             return picker;
         }
