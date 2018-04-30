@@ -1,21 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
+using FormsGenerator.Strategy;
 using Xamarin.Forms;
 
 namespace FormsGenerator
 {
     public class FormGenerator
     {
+        private readonly int GridHeight;
         public FormGenerator()
         {
+            if (Device.RuntimePlatform == Device.UWP)
+            {
+                GridHeight =  33;
+            }
+            else
+            {
+                GridHeight = 42;
+            }
+            
         }
+
         /// <summary>
-        /// Genereates a new form page based on the type of object provided.
-        /// When clicking submit, all the info gets copied onto the instance of
-        /// the calling party.
+        /// Genereates a new form page based on the type of object provided. You must push the page using Navigation.
+        /// When clicking submit, all the info gets copied onto the instance of the calling party.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="instance"></param>
@@ -24,25 +33,25 @@ namespace FormsGenerator
         {
             var formPage = new FormContentPage<T>(instance);
 
-            var grid = new Grid { Margin = new Thickness(15, 5, 15, 5) };
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(4, GridUnitType.Star) });
+            var grid = new Grid {Margin = new Thickness(15, 15, 15, 15)};
+            grid.ColumnDefinitions.Add(new ColumnDefinition {Width = new GridLength(2, GridUnitType.Star)});
+            grid.ColumnDefinitions.Add(new ColumnDefinition {Width = new GridLength(4, GridUnitType.Star)});
             var currentRow = 0;
 
             foreach (var property in instance.GetType().GetProperties())
             {
-                var strategy = new ViewStrategy(property);
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(40, GridUnitType.Absolute) });
-                grid.Children.Add(GetLabel(property.Name.SplitCamelCase()), 0, currentRow);
-
-                var type = property.PropertyType;
-                if (type.BaseType == typeof(Enum)) type = type.BaseType;
-                grid.Children.Add(strategy[type], 1, currentRow);
-
-                currentRow++;
+                var view = Strategy(property);
+                if (!property.GetCustomAttributes().Contains(new FormIgnore()) && view != null)
+                {
+                    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(GridHeight, GridUnitType.Absolute) });
+                    grid.Children.Add(GetLabel(property.Name.SplitCamelCase()), 0, currentRow);
+                    grid.Children.Add(view, 1, currentRow);
+                    currentRow++;
+                }
             }
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(50, GridUnitType.Absolute) });
-            
+
+            grid.RowDefinitions.Add(new RowDefinition {Height = new GridLength(GridHeight, GridUnitType.Absolute)});
+
             formPage.SetContent(grid);
             return formPage;
         }
@@ -50,6 +59,42 @@ namespace FormsGenerator
         private Label GetLabel(string text)
         {
             return new Label {Text = text, VerticalTextAlignment = TextAlignment.Center, FontSize = 16};
+        }
+
+        private View Strategy(PropertyInfo property)
+        {
+            IViewStrategy strat;
+            if (property.PropertyType.BaseType == typeof(Enum))
+            {
+                strat = new EnumPickerStrategy();
+            }
+            else
+            {
+                switch (property.PropertyType.Name)
+                {
+                    case ("String"):
+                        strat = new StringEntryStrategy(); break;
+                    case ("Int32"):
+                        var sliderOptions = (FormIntSlider)property.GetCustomAttributes().FirstOrDefault(a => a.GetType() == typeof(FormIntSlider));
+                        if (sliderOptions != null)
+                        {
+                            strat = new IntSliderStrategy();
+                        }
+                        else
+                        {
+                            strat = new IntEntryStrategy();
+                        }
+                        break;
+                    case ("Boolean"):
+                        strat = new BoolSwitchStrategy();  break;
+                    case ("DateTime"):
+                        strat = new DatePickerStrategy();  break;
+                    default:
+                        return null;
+                }
+
+            }
+            return strat.GetView(property);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using Xamarin.Forms;
@@ -58,23 +59,34 @@ namespace FormsGenerator
             {
                 Console.Write(ex.Message);
             }
+
             await Navigation.PopAsync();
         }
 
         private Object GetValue(PropertyInfo prop, View view)
         {
-            switch (view.GetType().Name)
+            var viewTypeName = view.GetType().Name;
+            if (viewTypeName == "Grid")
+            {
+                var gridLayout = view as Layout<View>;
+                view = gridLayout.Children[0];
+                viewTypeName = view.GetType().Name;
+            }
+
+            switch (viewTypeName)
             {
                 case ("Entry"):
                     var Entry = view as Entry;
 
-                    if (!string.IsNullOrEmpty(Entry.Text))
+                    if (!string.IsNullOrWhiteSpace(Entry.Text) ||
+                        prop.GetCustomAttributes().Contains(new FormOptional()))
                     {
                         if (prop.PropertyType == typeof(int)) return Int32.Parse(Entry.Text);
-                        return Entry.Text;
+                        return Entry.Text + "";
                     }
+
                     var name = prop.Name.SplitCamelCase();
-                    DisplayAlert(name + " Error", "Please fill the " + name + " field", "OK");
+                    DisplayAlert(name + " missing", "Please fill the " + name + " field", "OK");
                     break;
 
                 case ("Switch"):
@@ -88,6 +100,10 @@ namespace FormsGenerator
                 case ("DatePicker"):
                     var Date = view as DatePicker;
                     return Date.Date;
+
+                case ("Slider"):
+                    var Slider = view as Slider;
+                    return (int) Slider.Value;
 
                 default:
                     return null;

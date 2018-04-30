@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FormsGenerator;
 using Xamarin.Forms;
 
@@ -11,10 +7,12 @@ namespace FormApp
 	public partial class MainPage : ContentPage
 	{
 	    public Employee EmployeeModel { get; set; }
-		public MainPage()
+        public ModelTest ModelTest { get; set; }
+        public MainPage()
 		{
 			InitializeComponent();
 		    EmployeeModel = new Employee();
+		    ModelTest = new ModelTest();
         }
 	    public void CheckEmployee(object sender, EventArgs e)
 	    {
@@ -23,8 +21,17 @@ namespace FormApp
         async void GenerateFormPage(object sender, EventArgs e)
 	    {
 	        var formGenerator = new FormGenerator();
-	        var formPage = formGenerator.GeneratePage<Employee>(EmployeeModel);
+	        var formPage = formGenerator.GeneratePage(EmployeeModel);
+	        formPage.Title = "FORM";
+            //formPage.BackgroundColor = Color.DimGray;
 	        await Navigation.PushAsync(formPage);
 	    }
-	}
+	    async void GenerateFormPageTest(object sender, EventArgs e)
+	    {
+	        var formGenerator = new FormGenerator();
+	        var formPage = formGenerator.GeneratePage(ModelTest);
+	        formPage.Title = "FORM TEST";
+	        await Navigation.PushAsync(formPage);
+	    }
+    }
 }

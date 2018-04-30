@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
 
-namespace FormsGenerator
+namespace FormsGenerator.Triggers
 {
-    public class IntTriggerAction : TriggerAction<Entry>
+    public class StringTriggerAction : TriggerAction<Entry>
     {
         private string _prevValue = string.Empty;
-
+        private readonly int _maxLength;
+        public StringTriggerAction(int maxLength)
+        {
+            _maxLength = maxLength;
+        }
         protected override void Invoke(Entry entry)
         {
-            int n;
-            var isNumeric = int.TryParse(entry.Text, out n);
-
-            //entry.Text.Length > 4 ||  (to check length)
-            if (!string.IsNullOrWhiteSpace(entry.Text) && !isNumeric)
+            if (!string.IsNullOrWhiteSpace(entry.Text) && entry.Text.Length > _maxLength)
             {
                 entry.Text = _prevValue;
                 return;
