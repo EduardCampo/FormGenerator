@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Eduard Campo, Dani Bautista</Authors>
+    <Company />
+    <Description>Generates a custom ContentPage as a form that asks for all the information your custom model contains.</Description>
+    <RepositoryUrl>https://github.com/Danielbahe/FormGenerator.Xamarin</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Danielbahe/FormGenerator.Xamarin</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
