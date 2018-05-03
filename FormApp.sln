@@ -9,9 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormApp.iOS", "FormApp\Form
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormApp.UWP", "FormApp\FormApp.UWP\FormApp.UWP.csproj", "{D3A331E2-97ED-4A64-889A-2C5406625842}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormApp", "FormApp\FormApp\FormApp.csproj", "{7126D817-07D3-4712-83F7-FBCE7FF7A6F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FormApp", "FormApp\FormApp\FormApp.csproj", "{7126D817-07D3-4712-83F7-FBCE7FF7A6F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormsGenerator", "..\FormsGenerator\FormsGenerator.csproj", "{DCD75CA3-AA4B-4B58-9501-0568D7433E93}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormsGenerator", "FormsGenerator\FormsGenerator.csproj", "{DCD75CA3-AA4B-4B58-9501-0568D7433E93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

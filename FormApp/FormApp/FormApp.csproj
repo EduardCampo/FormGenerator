@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FormsGenerator\FormsGenerator.csproj" />
+    <ProjectReference Include="..\..\FormsGenerator\FormsGenerator.csproj" />
   </ItemGroup>
 
   <ItemGroup>
