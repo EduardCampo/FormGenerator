@@ -3,9 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:FormApp"
              x:Class="FormApp.MainPage">
-
-    <Button Text="Generate"  Clicked="GenerateFormPage"
-           VerticalOptions="Center" 
-           HorizontalOptions="Center" />
-
+    <StackLayout VerticalOptions="Center">
+        <Button Text="Generate"  Clicked="GenerateFormPage"
+            HorizontalOptions="Center" />
+        <Button Text="Form"  Clicked="GenerateFormPageTest"
+                HorizontalOptions="Center" />
+        <Button Text="Check Model"  Clicked="CheckEmployee"
+            HorizontalOptions="Center"/>
+    </StackLayout>
 </ContentPage>
