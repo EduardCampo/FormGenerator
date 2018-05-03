@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using FormsGenerator.Utilities;
 using Xamarin.Forms;
 
 namespace FormsGenerator.Strategy

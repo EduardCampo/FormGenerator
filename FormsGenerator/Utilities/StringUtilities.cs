@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
-namespace FormsGenerator
+namespace FormsGenerator.Utilities
 {
     public static class StringUtilities
     {

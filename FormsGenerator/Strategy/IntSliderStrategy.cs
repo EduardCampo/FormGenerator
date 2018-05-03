@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
-using System.Text;
-using FormsGenerator.Triggers;
 using Xamarin.Forms;
 
 namespace FormsGenerator.Strategy
@@ -22,7 +18,7 @@ namespace FormsGenerator.Strategy
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
                 slider.Maximum = (double) sliderOptions.MaxValue;
                 slider.Minimum = (double) sliderOptions.MinValue;
-                slider.Value = (double )sliderOptions.DefaultValue;
+                slider.Value = (double) sliderOptions.DefaultValue;
                 var label = new Label();
                 label.SetBinding(Label.TextProperty, "Value", BindingMode.TwoWay, null, "{0:F0}");
                 label.BindingContext = slider;

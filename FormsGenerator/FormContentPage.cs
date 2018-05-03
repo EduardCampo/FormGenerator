@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
+using FormsGenerator.Utilities;
 using Xamarin.Forms;
 
 namespace FormsGenerator
@@ -46,6 +45,10 @@ namespace FormsGenerator
                 var i = 0;
                 foreach (var view in views)
                 {
+                    if (properties[i].GetCustomAttributes().Contains(new FormIgnore()))
+                    {
+                        i++;
+                    }
                     if (view.GetType() != typeof(Label))
                     {
                         var value = GetValue(properties[i], view);

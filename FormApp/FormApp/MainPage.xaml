@@ -6,9 +6,9 @@
     <StackLayout VerticalOptions="Center">
         <Button Text="Generate"  Clicked="GenerateFormPage"
             HorizontalOptions="Center" />
-        <Button Text="Test QA"  Clicked="GenerateFormPageTest"
+        <Button Text="Form"  Clicked="GenerateFormPageTest"
                 HorizontalOptions="Center" />
-        <Button Text="Check Employee"  Clicked="CheckEmployee"
+        <Button Text="Check Model"  Clicked="CheckEmployee"
             HorizontalOptions="Center"/>
     </StackLayout>
 </ContentPage>

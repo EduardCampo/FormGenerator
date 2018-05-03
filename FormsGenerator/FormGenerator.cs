@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using FormsGenerator.Strategy;
+using FormsGenerator.Utilities;
 using Xamarin.Forms;
 
 namespace FormsGenerator
@@ -34,8 +35,8 @@ namespace FormsGenerator
             var formPage = new FormContentPage<T>(instance);
 
             var grid = new Grid {Margin = new Thickness(15, 15, 15, 15)};
+            grid.ColumnDefinitions.Add(new ColumnDefinition {Width = new GridLength(1, GridUnitType.Star)});
             grid.ColumnDefinitions.Add(new ColumnDefinition {Width = new GridLength(2, GridUnitType.Star)});
-            grid.ColumnDefinitions.Add(new ColumnDefinition {Width = new GridLength(4, GridUnitType.Star)});
             var currentRow = 0;
 
             foreach (var property in instance.GetType().GetProperties())
