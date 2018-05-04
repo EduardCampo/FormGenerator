@@ -6,12 +6,15 @@ using Xamarin.Forms;
 
 namespace FormsGenerator.Strategy
 {
-    public class EnumPickerStrategy : IViewStrategy
+    public class EnumPickerStrategy : ViewStrategy
     {
-        public View GetView(PropertyInfo property)
+        public EnumPickerStrategy(PropertyInfo property) : base(property)
+        {
+        }
+        public override View GetView()
         {
             var picker = new Picker();
-            var enumType = property.PropertyType;
+            var enumType = Property.PropertyType;
             var enumList = new List<string>();
             foreach (var item in Enum.GetValues(enumType))
             {

@@ -5,12 +5,15 @@ using Xamarin.Forms;
 
 namespace FormsGenerator.Strategy
 {
-    public class StringEntryStrategy : IViewStrategy
+    public class StringEntryStrategy : ViewStrategy
     {
-        public View GetView(PropertyInfo property = null)
+        public StringEntryStrategy(PropertyInfo property) : base(property)
+        {
+        }
+        public override View GetView()
         {
             var entry = new Entry();
-            var attributeList = property.GetCustomAttributes();
+            var attributeList = Property.GetCustomAttributes();
             var attribute = attributeList.FirstOrDefault(a => a.GetType() == typeof(FormPassword));
             if (attribute != null)
             {
