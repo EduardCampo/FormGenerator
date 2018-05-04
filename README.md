@@ -1,13 +1,17 @@
-# # Forms Generator
+# Forms Generator
 This NuGet package eases the way you collect information from your user. Create your own model, set some customization attributes and request a form as a ContentPage! Thanks to Dani Bautista for the idea and mentoring.
 
 [Example Android screenshot](https://i.imgur.com/5kARyPe.jpg)
 
 # Property types supported
 String
+
 Int
+
 Bool
+
 Enum
+
 DateTime (only asks for date)
 
 Working on adding custom classes as properties support.
@@ -53,6 +57,3 @@ That's it! When you press "submit" in the formPage, the property in the ViewMode
 **FormMaxValue** [int] : Entry will have a maximum number        
             
 **FormIntSlider** [int] : Int will be requested as a slider
-
-# More
-I am willing to add more customization options soon. Open an issue on GitHub and I'll check it out.
