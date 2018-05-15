@@ -16,14 +16,14 @@ namespace FormApp
         }
 	    public void CheckEmployee(object sender, EventArgs e)
 	    {
+            Console.WriteLine(EmployeeModel);
 	        // INTERRUPTION PONIT TO CHECK EMPLOYEE HERE
 	    }
         async void GenerateFormPage(object sender, EventArgs e)
 	    {
 	        var formGenerator = new FormGenerator();
-	        var formPage = formGenerator.GeneratePage(EmployeeModel);
-	        formPage.Title = "FORM";
-            //formPage.BackgroundColor = Color.DimGray;
+            var formPage = formGenerator.GeneratePage(EmployeeModel, "Submit Form");
+	        formPage.Title = "Employee Form";
 	        await Navigation.PushAsync(formPage);
 	    }
 	    async void GenerateFormPageTest(object sender, EventArgs e)

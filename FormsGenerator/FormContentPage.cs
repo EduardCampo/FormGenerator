@@ -9,17 +9,20 @@ namespace FormsGenerator
     public class FormContentPage<T> : ContentPage
     {
         public T Model { get; set; }
+        public string SubmitText { get; set; }
 
-        public FormContentPage(T model)
+        public FormContentPage(T model, string submitText)
         {
             Model = model;
+            SubmitText = submitText;
         }
 
         public void SetContent(Grid grid)
         {
             var button = new Button
             {
-                Text = "Submit",
+                Text = SubmitText,
+                Scale = 1.2,
                 HorizontalOptions = LayoutOptions.CenterAndExpand
             };
             button.Clicked += PopPage;
@@ -69,17 +72,20 @@ namespace FormsGenerator
         private Object GetValue(PropertyInfo prop, View view)
         {
             var viewTypeName = view.GetType().Name;
-            if (viewTypeName == "Grid")
+
+            var mainGrid = view as Layout<View>;
+            var child = mainGrid.Children[1];
+            if (child.GetType() == typeof(Grid))
             {
-                var gridLayout = view as Layout<View>;
-                view = gridLayout.Children[0];
-                viewTypeName = view.GetType().Name;
+                var innerGrid = child as Layout<View>;
+                child = innerGrid.Children[0];
             }
+            viewTypeName = child.GetType().Name;
 
             switch (viewTypeName)
             {
                 case ("Entry"):
-                    var Entry = view as Entry;
+                    var Entry = child as Entry;
 
                     if (!string.IsNullOrWhiteSpace(Entry.Text) ||
                         prop.GetCustomAttributes().Contains(new FormOptional()))
@@ -93,19 +99,19 @@ namespace FormsGenerator
                     break;
 
                 case ("Switch"):
-                    var Switch = view as Switch;
+                    var Switch = child as Switch;
                     return Switch.IsToggled;
 
                 case ("Picker"):
-                    var Picker = view as Picker;
+                    var Picker = child as Picker;
                     return Picker.SelectedIndex;
 
                 case ("DatePicker"):
-                    var Date = view as DatePicker;
+                    var Date = child as DatePicker;
                     return Date.Date;
 
                 case ("Slider"):
-                    var Slider = view as Slider;
+                    var Slider = child as Slider;
                     return (int) Slider.Value;
 
                 default:
