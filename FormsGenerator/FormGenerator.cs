@@ -21,7 +21,7 @@ namespace FormsGenerator
         {
             var formPage = new FormContentPage<T>(instance, submitText);
 
-            var grid = new Grid {Margin = new Thickness(15, 15, 15, 15)};
+            var mainGrid = new Grid {Margin = new Thickness(15, 15, 15, 15)};
             var currentRow = 0;
 
             foreach (var property in instance.GetType().GetProperties())
@@ -29,12 +29,11 @@ namespace FormsGenerator
                 var view = Strategy(property);
                 if (!property.GetCustomAttributes().Contains(new FormIgnore()) && view != null)
                 {
-                    grid.Children.Add(view,0,currentRow);
+                    mainGrid.Children.Add(view,0,currentRow);
                     currentRow++;
                 }
             }
-            //grid.RowDefinitions.Add(new RowDefinition {Height = new GridLength(GridHeight, GridUnitType.Absolute)});
-            formPage.SetContent(grid);
+            formPage.SetContent(mainGrid);
             return formPage;
         }
 
@@ -69,7 +68,6 @@ namespace FormsGenerator
                     default:
                         return null;
                 }
-
             }
             return strat.GetGrid();
         }

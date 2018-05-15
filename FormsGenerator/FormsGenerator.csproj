@@ -7,7 +7,7 @@
     <Description>Generates a form ContentPage that asks the users for all the information your custom model contains.</Description>
     <RepositoryUrl>https://github.com/EduardCampo/FormGenerator</RepositoryUrl>
     <PackageProjectUrl>https://github.com/EduardCampo/FormGenerator</PackageProjectUrl>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

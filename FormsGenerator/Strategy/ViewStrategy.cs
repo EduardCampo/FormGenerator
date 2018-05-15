@@ -22,7 +22,7 @@ namespace FormsGenerator.Strategy
 
         }
 
-        public Label GetLabel(string text)
+        protected Label GetLabel(string text)
         {
             return new Label { Text = text, VerticalTextAlignment = TextAlignment.Center, FontSize = 16 };
         }
@@ -37,7 +37,6 @@ namespace FormsGenerator.Strategy
             grid.Children.Add(GetView(), 1, 0);
             return grid;
         }
-
         public abstract View GetView();
     }
 }
