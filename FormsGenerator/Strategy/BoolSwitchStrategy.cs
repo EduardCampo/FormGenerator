@@ -3,9 +3,12 @@ using Xamarin.Forms;
 
 namespace FormsGenerator.Strategy
 {
-    public class BoolSwitchStrategy : IViewStrategy
+    public class BoolSwitchStrategy : ViewStrategy
     {
-        public View GetView(PropertyInfo property = null)
+        public BoolSwitchStrategy(PropertyInfo property) : base(property)
+        {
+        }
+        public override View GetView()
         {
             return new Switch();
         }

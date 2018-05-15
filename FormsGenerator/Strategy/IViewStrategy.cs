@@ -5,6 +5,6 @@ namespace FormsGenerator.Strategy
 {
     public interface IViewStrategy
     {
-        View GetView(PropertyInfo property = null);
+        Grid GetGrid();
     }
 }

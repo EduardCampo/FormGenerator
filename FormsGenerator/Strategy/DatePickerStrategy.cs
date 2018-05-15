@@ -3,9 +3,12 @@ using Xamarin.Forms;
 
 namespace FormsGenerator.Strategy
 {
-    public class DatePickerStrategy : IViewStrategy
+    public class DatePickerStrategy : ViewStrategy
     {
-        public View GetView(PropertyInfo property = null)
+        public DatePickerStrategy(PropertyInfo property) : base(property)
+        {
+        }
+        public override View GetView()
         {
             return new DatePicker();
         }
