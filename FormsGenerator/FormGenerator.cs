@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Reflection;
 using FormsGenerator.Strategy;
-using FormsGenerator.Utilities;
 using Xamarin.Forms;
 
 namespace FormsGenerator
@@ -17,7 +16,7 @@ namespace FormsGenerator
         /// <param name="instance"></param>
         /// <param name="submitText"></param>
         /// <returns></returns>
-        public FormContentPage<T> GeneratePage<T>(T instance, string submitText = "Submit")
+        public FormContentPage<T> GeneratePage<T>(T instance, GridType gridType = GridType.Default, string submitText = "Submit")
         {
             var formPage = new FormContentPage<T>(instance, submitText);
 
@@ -26,7 +25,7 @@ namespace FormsGenerator
 
             foreach (var property in instance.GetType().GetProperties())
             {
-                var view = Strategy(property);
+                var view = Strategy(property, gridType);
                 if (!property.GetCustomAttributes().Contains(new FormIgnore()) && view != null)
                 {
                     mainGrid.Children.Add(view,0,currentRow);
@@ -37,7 +36,7 @@ namespace FormsGenerator
             return formPage;
         }
 
-        private View Strategy(PropertyInfo property)
+        private View Strategy(PropertyInfo property, GridType gridType)
         {
             IViewStrategy strat;
             if (property.PropertyType.BaseType == typeof(Enum))
@@ -69,7 +68,7 @@ namespace FormsGenerator
                         return null;
                 }
             }
-            return strat.GetGrid();
+            return strat.GetGrid(gridType);
         }
     }
 }
